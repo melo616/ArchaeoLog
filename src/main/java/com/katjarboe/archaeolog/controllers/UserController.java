@@ -26,7 +26,7 @@ public class UserController {
 	//binding empty user/loginuser objects to JSP to hold form input
 	model.addAttribute("newUser", new User());
 	model.addAttribute("newLogin", new LoginUser());
-	return "loginreg.jsp";
+	return "logreg.jsp";
 	}
 
 	@PostMapping("/register")
@@ -34,7 +34,7 @@ public class UserController {
 		User registeredUser = userService.register(newUser, result);
 		if(result.hasErrors()) {
 			model.addAttribute("newLogin", new LoginUser());
-			return "loginreg.jsp";
+			return "logreg.jsp";
 		}
 		//if no errors, set in session (ie login) and redirect to home
 		session.setAttribute("userId", registeredUser.getId());
@@ -49,7 +49,7 @@ public class UserController {
          User loginUser = userService.login(newLogin, result);
         if(result.hasErrors()) {
             model.addAttribute("newUser", new User());
-            return "loginreg.jsp";
+            return "logreg.jsp";
         }
         //if no errors, get user info and store in session
         session.setAttribute("userId", loginUser.getId());

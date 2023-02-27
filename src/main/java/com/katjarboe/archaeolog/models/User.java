@@ -8,6 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -42,12 +45,20 @@ public class User {
     //one to many
     //user to dig
     @OneToMany(mappedBy="digCreator", fetch=FetchType.LAZY)
-    private List<Dig> createdDigList;
+    private List<Dig> createdDigs;
     
     //one to many
     //user to artifacts
     @OneToMany(mappedBy="artifactCreator", fetch=FetchType.LAZY)
-    private List<Artifact> createdArtifactList;
+    private List<Artifact> createdArtifacts;
+    
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "dig_participants",
+		joinColumns = @JoinColumn(name="dig_id"),
+		inverseJoinColumns=@JoinColumn(name="participant_id")
+	)
+	private List<Dig> digs;
     
     //default constructor
     public User() {}
@@ -91,5 +102,29 @@ public class User {
 
 	public void setConfirm(String confirm) {
 		this.confirm = confirm;
+	}
+
+	public List<Dig> getCreatedDigs() {
+		return createdDigs;
+	}
+
+	public void setCreatedDigs(List<Dig> createdDigs) {
+		this.createdDigs = createdDigs;
+	}
+
+	public List<Artifact> getCreatedArtifacts() {
+		return createdArtifacts;
+	}
+
+	public void setCreatedArtifacts(List<Artifact> createdArtifacts) {
+		this.createdArtifacts = createdArtifacts;
+	}
+
+	public List<Dig> getDigs() {
+		return digs;
+	}
+
+	public void setDigs(List<Dig> digs) {
+		this.digs = digs;
 	}
 }

@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -59,14 +61,77 @@ public class Dig {
 	private User digCreator;
 	
 	//one to many: artifacts
-	@OneToMany(mappedBy="XXX", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="dig", fetch=FetchType.LAZY)
     private List<Artifact> artifacts;
-    
 	
 	//many to many: participants
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "dig_participants",
+		joinColumns = @JoinColumn(name="dig_id"),
+		inverseJoinColumns=@JoinColumn(name="participant_id")
+	)
+	private List<User> digParticipants;
+	
 	
 	//default constructor
 	public Dig() {}
-	
+
 	//getters and setters
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getDigName() {
+		return digName;
+	}
+	public void setDigName(String digName) {
+		this.digName = digName;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	public User getDigCreator() {
+		return digCreator;
+	}
+	public void setDigCreator(User digCreator) {
+		this.digCreator = digCreator;
+	}
+	public List<Artifact> getArtifacts() {
+		return artifacts;
+	}
+	public void setArtifacts(List<Artifact> artifacts) {
+		this.artifacts = artifacts;
+	}
+	public List<User> getDigParticipants() {
+		return digParticipants;
+	}
+	public void setDigParticipants(List<User> digParticipants) {
+		this.digParticipants = digParticipants;
+	}
+	
+	
 }
