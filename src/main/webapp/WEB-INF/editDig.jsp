@@ -18,7 +18,7 @@
 <body>
 	<h2>Create a Dig</h2>
 	<div class="container mt-5">
-		<form:form action="/digs/new" method="POST" modelAttribute="newDig">
+		<form:form action="/digs/edit/{id}" method="POST" modelAttribute="">
 			<p>
 				<form:label path="digName">Name your dig: </form:label>
 				<form:input path="digName" class="form-control"/>
@@ -42,7 +42,7 @@
 				<form:input path="notes" class="form-control"/>
 				<form:errors path="notes"/>
 			</p>
-			<form:hidden path="digCreator" value="${userId }"/>
+			<form:hidden path="digCreator"/>
 	 	<button type="submit">Submit</button>
 		</form:form>
 		<button onclick="window.location.href = '/home'">Cancel</button>

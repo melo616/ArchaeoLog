@@ -17,16 +17,20 @@
 </head>
 <body>
 	<div class="d-flex justify-content-between">
-		<h1>Welcome, ${userName }!</h1>
+		<h1>Welcome, ${loggedInUser.userName }!</h1>
 		<a href="/logout">Logout</a>
 	</div>
 	<div>
 		<h3>New project?</h3>
-		<p>Create a new dig</p>
+		<p><a href="/digs/new">Create a new dig</a></p>
 	</div>
 	<div>
 		<h3>My Digs</h3>
-		<!-- Map user's digs -->
+		<c:forEach var="oneDig" items="${digList }">
+			<c:if test="${oneDig.digParticipants.contains(loggedInUser)}">
+				<p><a href="/digs/view/${oneDig.id }"><c:out value="${oneDig.digName}"/></a></p>
+			</c:if>
+		</c:forEach>
 	</div>
 </body>
 </html>

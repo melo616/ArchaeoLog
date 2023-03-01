@@ -35,9 +35,13 @@ public class Dig {
 	
 	@NotNull
 //	Look up date format
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date startDate;
 	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date endDate;
+	
+	private String notes;
 	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -132,6 +136,10 @@ public class Dig {
 	public void setDigParticipants(List<User> digParticipants) {
 		this.digParticipants = digParticipants;
 	}
-	
-	
+	public String getNotes() {
+		return notes;
+	}
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
 }

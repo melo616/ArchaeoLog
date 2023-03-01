@@ -55,8 +55,8 @@ public class User {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		name = "dig_participants",
-		joinColumns = @JoinColumn(name="dig_id"),
-		inverseJoinColumns=@JoinColumn(name="participant_id")
+		joinColumns = @JoinColumn(name="participant_id"),
+		inverseJoinColumns=@JoinColumn(name="dig_id")
 	)
 	private List<Dig> digs;
     
