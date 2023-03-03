@@ -16,7 +16,13 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-	<h1>Viewing details of <c:out value="${dig.digName}"/></h1>
+	<div class="d-flex justify-content-between">
+		<h1>Viewing details of <c:out value="${dig.digName}"/></h1>
+		<div>
+			<p><a href="/logout">Logout</a></p>
+			<p><a href="/home">Home</a></p>
+		</div>
+	</div>
 	<p>Created by 
 	<c:choose>
 		<c:when test="${dig.digCreator.id.equals(userId)}">you</c:when>
@@ -24,44 +30,48 @@
 	</c:choose>
 	</p>
 	<hr>
-	<button onclick="showHide()">View/Hide Participants</button>
-	<div id="participantList">
-		<c:forEach var="oneParticipant" items="${dig.digParticipants }">
-			<p><c:out value="${oneParticipant.userName}"/></p>
-		</c:forEach>
+	<div class="container row">
+	<div class="col">
+	<h3>Participants</h3>
+		<button onclick="showHide()" class="btn btn-warning">View/Hide Participants</button>
+		<div id="participantList">
+			<c:forEach var="oneParticipant" items="${dig.digParticipants }">
+				<p><c:out value="${oneParticipant.userName}"/></p>
+			</c:forEach>
+		</div>
 	</div>
 	<c:if test="${dig.digCreator.id.equals(userId)}">
-	<div>
-	<h3>Add participant</h3>
-	<form action="/digs/addUser/${dig.id}" method="POST">
-	<input type="hidden" name="_method" value="put"/>
-		<label for="email">New Participant Email: </label>
-		<input type="text" name="email" class="form-control"/>
-	<button type="submit">Add</button>
-	</form>
+	<div class="col">
+		<h5>Add participant</h5>
+		<p class="red-text"><c:out value="${error}"/></p>
+		<form action="/digs/addUser/${dig.id}" method="POST">
+		<input type="hidden" name="_method" value="put"/>
+			<label for="email">New Participant Email: </label>
+			<input type="text" name="email" class="form-control"/>
+		<button type="submit" class="btn btn-warning">Add</button>
+		</form>
 	</div>
 	</c:if>
-	<h3>Start Date</h3>
-	<p>
-		<fmt:formatDate type="date" value="${dig.startDate }" pattern="MMM dd YYYY"/>
-	</p>
-	<h3>End Date</h3>
-	<p>
-		<fmt:formatDate type="date" value="${dig.endDate }" pattern="MMM dd YYYY"/>
-	</p>
-	<div>
-	<h3>Artifacts</h3>
-	<p><a href="/artifacts/new">Add new artifact</a></p>
 	</div>
+	<div class="container row">
+	<h3>Duration</h3>
+		<h5>Start Date</h5>
+		<p>
+			<fmt:formatDate type="date" value="${dig.startDate }" pattern="MMM dd YYYY"/>
+		</p>
+		<h5>End Date</h5>
+		<p>
+			<fmt:formatDate type="date" value="${dig.endDate }" pattern="MMM dd YYYY"/>
+		</p>
+	</div>
+	<div class="m-3">
+	<h3>Artifacts</h3>
+	<button class="btn btn-warning" onclick="window.location.href ='/digs/${dig.id}/newArtifact'">Add new artifact</button>
+	<c:forEach var="oneArtifact" items="${artifactList}" begin="0" end="4">
+		<p><a href="/digs/${dig.id}/artifacts/${oneArtifact.id}"><c:out value="${oneArtifact.category}; ${oneArtifact.material}"/></a> | logged by <c:out value="${oneArtifact.artifactCreator.userName}"/> at <fmt:formatDate type="date" value="${oneArtifact.createdAt}" pattern="MMM dd YYYY hh:mma"/></p>
+	</c:forEach>
+	<p><a href="/digs/${dig.id}/allArtifacts">See more...</a></p>
+	</div>
+<script src="/js/script.js"></script>
 </body>
-<script>
-	function showHide() {
-		let content = document.getElementById("participantList");
-		if (content.style.display === "none") {
-			content.style.display = "block";
-		} else {
-			content.style.display = "none";
-		}
-	}
-</script>
 </html>

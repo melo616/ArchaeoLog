@@ -9,5 +9,5 @@ import com.katjarboe.archaeolog.models.Dig;
 
 @Repository
 public interface DigRepository extends JpaRepository<Dig, Long>{
-	List<Dig> findByOrderByCreatedAtDesc();
+	List<Dig> findByOrderByEndDateDesc();
 }

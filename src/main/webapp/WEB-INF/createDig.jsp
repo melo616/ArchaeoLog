@@ -43,9 +43,9 @@
 				<form:errors path="notes"/>
 			</p>
 			<form:hidden path="digCreator" value="${userId }"/>
-	 	<button type="submit">Submit</button>
+	 	<button class="btn btn-warning" type="submit">Submit</button>
 		</form:form>
-		<button onclick="window.location.href = '/home'">Cancel</button>
+		<button class="btn btn-warning mt-2" onclick="window.location.href = '/home'">Cancel</button>
 	</div>
 </body>
 </html>

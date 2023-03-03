@@ -3,3 +3,27 @@
 #participantList {
 	display: none;
 }
+
+.red-text {
+	color: red;
+}
+
+#img {
+	background-image: url("/images/ruins.jpeg");
+	background-size: cover;
+	height: 100vh;
+}
+
+.artifactImg {
+	background-image: url("/images/wall.jpeg");
+	background-size: cover;
+	height: 100vh;
+}
+
+.opaque {
+	background: rgb(255,255,255,0.9);
+}
+
+.seethru {
+	background: rgb(255,255,255,0.5);
+}

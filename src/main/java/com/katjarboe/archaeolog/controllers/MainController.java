@@ -1,5 +1,7 @@
 package com.katjarboe.archaeolog.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -13,10 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.katjarboe.archaeolog.models.Artifact;
 import com.katjarboe.archaeolog.models.Dig;
 import com.katjarboe.archaeolog.models.User;
-import com.katjarboe.archaeolog.repositories.UserRepository;
+import com.katjarboe.archaeolog.services.ArtifactService;
 import com.katjarboe.archaeolog.services.DigService;
 import com.katjarboe.archaeolog.services.UserService;
 
@@ -27,10 +31,8 @@ public class MainController {
 	private UserService userService;
 	@Autowired
 	private DigService digService;
-//	@Autowired
-//	private ArtifactService artifactService;
 	@Autowired
-	private UserRepository userRepo;
+	private ArtifactService artifactService;
 	
 	//homepage: utilizes get all
 	@GetMapping("/home")
@@ -72,18 +74,85 @@ public class MainController {
 		Dig dig = digService.oneDig(id);
 		Long userId = (Long) session.getAttribute("userId");
 		User loggedInUser = userService.oneUser(userId);
+		List<Artifact> artifactList = artifactService.allArtifacts(id);
 		model.addAttribute("dig", dig);
 		model.addAttribute("loggedInUser", loggedInUser);
+		model.addAttribute("artifactList", artifactList);
 		return "oneDig.jsp";
 	}
 	
 	//many to many: add participant
 	@PutMapping("/digs/addUser/{id}")
-	public String getDigAndAddUser(@PathVariable("id") Long id, @RequestParam(value="email") String email) {
+	public String getDigAndAddUser(@PathVariable("id") Long id, @RequestParam(value="email") String email, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
 		Dig dig = digService.oneDig(id);
-		User newParticipant = userRepo.findByEmail(email).get();
-		digService.addDigParticipant(newParticipant, dig);
-		return "redirect:/digs/view/{id}";
+		User newParticipant = userService.oneUserByEmail(email);
+		if (newParticipant == null) {
+			redirectAttributes.addFlashAttribute("error", "This email address is not registered.");
+			model.addAttribute("dig", dig);
+			return "redirect:/digs/view/{id}";
+		} else if (dig.getDigParticipants().contains(newParticipant)) {
+			redirectAttributes.addFlashAttribute("error", "This user is already a participant of this dig.");
+			model.addAttribute("dig", dig);
+			return "redirect:/digs/view/{id}";
+		} else {
+			digService.addDigParticipant(newParticipant, dig);
+			return "redirect:/digs/view/{id}";
+		}
+	}
+	
+	//create artifact: form
+	@GetMapping("/digs/{id}/newArtifact")
+	public String displayNewArtifactForm(@PathVariable("id")Long id, HttpSession session, @ModelAttribute("newArtifact")Artifact artifact, Model model) {
+		if(session.getAttribute("userId") == null) {
+			return "redirect:/";
+		}
+		Dig dig = digService.oneDig(id);
+		model.addAttribute("dig", dig);
+		return "createArtifact.jsp";
+	}
+	
+	//create artifact: process
+	@PostMapping("/digs/{id}/newArtifact")
+	public String processNewArtifactForm(@Valid @ModelAttribute("newArtifact")Artifact newArtifact, BindingResult result, @PathVariable("id")Long id, Model model, HttpSession session) {
+		if (result.hasErrors()) {
+			Dig dig = digService.oneDig(id);
+			model.addAttribute("dig", dig);
+			return "createArtifact.jsp";
+		} else {
+			artifactService.createArtifact(newArtifact);
+			return "redirect:/digs/view/{id}";
+		}
+	}
+	
+	//get all: artifacts by dig
+	@GetMapping("/digs/{id}/allArtifacts")
+	public String allArtifacts(@PathVariable("id")Long id, Model model, HttpSession session) {
+		if(session.getAttribute("userId") == null) {
+			return "redirect:/";
+		} else {
+			Dig dig = digService.oneDig(id);
+			Long userId = (Long) session.getAttribute("userId");
+			User loggedInUser = userService.oneUser(userId);
+			List<Artifact> artifactList = artifactService.allArtifacts(id);
+			model.addAttribute("dig", dig);
+			model.addAttribute("loggedInUser", loggedInUser);
+			model.addAttribute("artifactList", artifactList);
+			return "allArtifacts.jsp";
+		}
+	}
+	
+	//get one artifact
+	@GetMapping("/digs/{digId}/artifacts/{artifactId}")
+	public String oneArtifact(@PathVariable("digId")Long digId, @PathVariable("artifactId")Long artifactId, Model model, HttpSession session) {
+		if(session.getAttribute("userId") == null) {
+			return "redirect:/";
+		} else {
+			Dig dig = digService.oneDig(digId);
+			Artifact artifact = artifactService.oneArtifact(artifactId);
+			model.addAttribute("dig", dig);
+			model.addAttribute("artifact", artifact);
+		return "oneArtifact.jsp";
+		}
 	}
 }
 

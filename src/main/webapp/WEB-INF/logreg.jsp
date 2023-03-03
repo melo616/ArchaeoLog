@@ -16,11 +16,12 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-	<div>
+<div id="img">
+	<div class="seethru">
 		<h1>ArchaeoLog</h1>
 		<h3>Digital Field Log for Archaeologists</h3>
 	</div>
-		<div class="container mt-5">
+		<div class="container mt-5 seethru">
 		<h1>Register</h1>
 		<form:form action="/register" method="POST" modelAttribute="newUser">
 			<div class="form-group">
@@ -46,7 +47,7 @@
 			<button type="submit" class="btn btn-primary">Register</button>
 		</form:form>
 	</div>
-	<div class="container mt-5">
+	<div class="container mt-5 seethru">
 		<h1>Login</h1>
 		<form:form action="/login" method="POST" modelAttribute="newLogin">
 			<div class="form-group">
@@ -62,5 +63,7 @@
 			<button type="submit" class="btn btn-primary">Login</button>
 		</form:form>
 	</div>
+</div>
+<script src="/js/script.js"></script>
 </body>
 </html>

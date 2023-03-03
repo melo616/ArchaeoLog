@@ -57,7 +57,7 @@ public class Artifact {
 	
 	//many to one: dig
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="dig")
+	@JoinColumn(name="dig_id")
 	private Dig dig; 
 	
 	//default constructor

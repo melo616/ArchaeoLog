@@ -16,15 +16,17 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-	<div class="d-flex justify-content-between">
+<div class="artifactImg">
+	<div class="d-flex justify-content-between seethru">
 		<h1>Welcome, ${loggedInUser.userName }!</h1>
 		<a href="/logout">Logout</a>
 	</div>
-	<div>
+	<div class="d-flex gap-3">
+	<div class="m-5 col opaque p-3">
 		<h3>New project?</h3>
 		<p><a href="/digs/new">Create a new dig</a></p>
 	</div>
-	<div>
+	<div class="m-5 col opaque p-3">
 		<h3>My Digs</h3>
 		<c:forEach var="oneDig" items="${digList }">
 			<c:if test="${oneDig.digParticipants.contains(loggedInUser)}">
@@ -32,5 +34,7 @@
 			</c:if>
 		</c:forEach>
 	</div>
+</div>
+</div>
 </body>
 </html>

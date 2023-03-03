@@ -20,7 +20,7 @@ public class DigService {
 	
 	//get all tables
 	public List<Dig> allDigs() {
-		return digRepo.findByOrderByCreatedAtDesc();
+		return digRepo.findByOrderByEndDateDesc();
 	}
 	
 	//create
@@ -45,21 +45,4 @@ public class DigService {
 		dig.getDigParticipants().add(newParticipant);
 		return digRepo.save(dig);
 	}
-	//find one: used for update
-//	public Top oneTop(Long id) {
-//		Optional<Top> optionalTop = topRepo.findById(id);
-//		if(optionalTop.isPresent()) {
-//			return optionalTop.get();
-//		}else {
-//			return null;
-//		}
-//	}
-	//update
-//	public Top editTop(Top top) {
-//		return topRepo.save(top);
-//	}
-	//delete
-//	public void deleteTop(Long id) {
-//		topRepo.deleteById(id);
-//	}
 }

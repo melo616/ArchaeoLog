@@ -67,4 +67,13 @@ public class UserService {
 			return null;
 		}	
 	}
+	//find one user by email
+	public User oneUserByEmail(String email) {
+		Optional<User> optionalUser = userRepo.findByEmail(email);
+		if(optionalUser.isPresent()) {
+			return optionalUser.get();
+		} else {
+			return null;
+		}	
+	}
 }
