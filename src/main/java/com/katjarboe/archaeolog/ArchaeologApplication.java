@@ -9,5 +9,4 @@ public class ArchaeologApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ArchaeologApplication.class, args);
 	}
-
 }

@@ -34,4 +34,9 @@ public class ArtifactService {
 			return null;
 		}
 	}
+	
+	//delete
+	public void deleteArtifact(Long id) {
+		artifactRepo.deleteById(id);
+	}
 }
