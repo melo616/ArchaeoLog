@@ -39,10 +39,13 @@
 		<p><fmt:formatDate type="date" value="${artifact.updatedAt}" pattern="MMM dd YYYY hh:mma"/></p>
 		</c:if>
 	</div>
+	<div class="d-flex gap-2">
 		<form method="POST" action="/digs/${dig.id}/artifacts/delete/${artifact.id}">
 			<input type="hidden" name="_method" value="delete"/>
 			<button class="btn btn-danger" type="submit">Delete Artifact</button>
 		</form>
+		<button class="btn btn-warning" onclick="window.location.href ='/digs/${dig.id}/artifacts/edit/${artifact.id }'">Edit Artifact</button>
+	</div>
 <script src="/js/script.js"></script>
 </body>
 </html>

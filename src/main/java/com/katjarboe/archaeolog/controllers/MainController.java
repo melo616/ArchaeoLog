@@ -162,5 +162,15 @@ public class MainController {
 		artifactService.deleteArtifact(artifactId);
 		return "redirect:/digs/view/{digId}";
 	}
+	
+	//update artifact: display form
+	@GetMapping("/digs/{digId}/artifacts/edit/{artifactId}")
+	public String updateArtifactDisplayForm(@PathVariable("digId")Long digId, @PathVariable("artifactId")Long artifactId, Model model) {
+		Dig dig = digService.oneDig(digId);
+		Artifact artifact = artifactService.oneArtifact(artifactId);
+		model.addAttribute("artifact", artifact);
+		model.addAttribute("dig", dig);
+		return "editArtifact.jsp";
+	}
 }
 

@@ -16,9 +16,9 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-	<h2>Add an Artifact</h2>
+	<h2>Edit Artifact</h2>
 	<div class="container mt-5">
-		<form:form action="/artifacts/edit/{id}" method="POST" modelAttribute="newArtifact">
+		<form:form action="digs/{digId}/artifacts/edit/{artifactId}" method="POST" modelAttribute="artifact">
 			<p>
 				<form:label path="category">Category: </form:label>
 				<form:select path="category" class="form-control">
@@ -44,9 +44,9 @@
 			</p>
 			<form:hidden path="artifactCreator"/>
 			<form:hidden path="dig"/>
-	 	<button type="submit">Submit</button>
+	 	<button class='btn btn-warning' type="submit">Submit</button>
 		</form:form>
-		<button onclick="window.location.href = '/home'">Cancel</button>
+		<button class='btn btn-warning mt-2' onclick="window.location.href = '/digs/${dig.id}/artifacts/${artifact.id}'">Cancel</button>
 	</div>
 </body>
 </html>
