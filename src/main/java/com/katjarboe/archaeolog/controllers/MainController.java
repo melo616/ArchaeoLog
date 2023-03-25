@@ -101,6 +101,15 @@ public class MainController {
 		}
 	}
 	
+	//remove participant from dig
+	@PutMapping("/digs/{digId}/removeUser/{userId}")
+	public String getDigAndRemoveUser(@PathVariable("digId")Long digId, @PathVariable("userId") Long userId) {
+		Dig dig = digService.oneDig(digId);
+		User selectedParticipant = userService.oneUser(userId);
+		digService.removeDigParticipant(selectedParticipant, dig);
+		return "redirect:/digs/view/{digId}";
+	}
+	
 	//create artifact: form
 	@GetMapping("/digs/{id}/newArtifact")
 	public String displayNewArtifactForm(@PathVariable("id")Long id, HttpSession session, @ModelAttribute("newArtifact")Artifact artifact, Model model) {

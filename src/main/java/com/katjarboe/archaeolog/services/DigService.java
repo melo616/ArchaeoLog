@@ -45,4 +45,10 @@ public class DigService {
 		dig.getDigParticipants().add(newParticipant);
 		return digRepo.save(dig);
 	}
+	
+	//remove participant
+	public Dig removeDigParticipant(User selectedParticipant, Dig dig) {
+		dig.getDigParticipants().remove(selectedParticipant);
+		return digRepo.save(dig);
+	}
 }

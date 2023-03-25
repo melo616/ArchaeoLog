@@ -35,9 +35,24 @@
 	<h3>Participants</h3>
 		<button onclick="showHide()" class="btn btn-warning">View/Hide Participants</button>
 		<div id="participantList">
+		<table>
+		<tbody>
 			<c:forEach var="oneParticipant" items="${dig.digParticipants }">
-				<p><c:out value="${oneParticipant.userName}"/></p>
+			<tr>
+				<td><c:out value="${oneParticipant.userName}"/></td>
+				<c:choose>
+					<c:when test="${dig.digCreator.id.equals(oneParticipant.id)}"><td class="text-italic">Dig admin</td></c:when>
+					<c:otherwise>
+						<td><form method="POST" action="/digs/${dig.id}/removeUser/${oneParticipant.id}"> 
+						<input type="hidden" name="_method" value="put">
+						<button class="btn btn-warning">Remove</button>
+						</form></td>
+					</c:otherwise>
+				</c:choose>
+			</tr>
 			</c:forEach>
+		</tbody>
+		</table>
 		</div>
 	</div>
 	<c:if test="${dig.digCreator.id.equals(userId)}">
