@@ -24,3 +24,23 @@ function showHide() {
 		content.style.display = "none";
 	}
 }
+
+//alert to confirm dig delete
+function deleteDigAlert(id) {
+	if(confirm("Are you sure you want to delete this dig? All associated artifacts will also be deleted. This action cannot be undone.")) {
+		fetch("/digs/" + id + "/delete", {
+			method: 'DELETE'
+		})
+		.then(response => {
+			if(response.ok) {
+				window.location.href="/home";
+			} else {
+				throw new Error("Something went wrong.");
+			}
+		})
+		.catch(error => {
+			console.error(error);
+		})
+	} 
+	
+}

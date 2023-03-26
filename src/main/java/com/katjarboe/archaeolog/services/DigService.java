@@ -51,4 +51,9 @@ public class DigService {
 		dig.getDigParticipants().remove(selectedParticipant);
 		return digRepo.save(dig);
 	}
+	
+	//delete dig
+	public void deleteDig(Long id) {
+		digRepo.deleteById(id);
+	}
 }

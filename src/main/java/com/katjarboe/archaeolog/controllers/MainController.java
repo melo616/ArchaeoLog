@@ -110,6 +110,14 @@ public class MainController {
 		return "redirect:/digs/view/{digId}";
 	}
 	
+	//delete dig and associated artifacts
+	@DeleteMapping("/digs/{id}/delete")
+	public String deleteDigWithArtifacts(@PathVariable("id")Long id) {
+		artifactService.deleteArtifactsByDigId(id);
+		digService.deleteDig(id);
+		return "redirect:/home";
+	}
+	
 	//create artifact: form
 	@GetMapping("/digs/{id}/newArtifact")
 	public String displayNewArtifactForm(@PathVariable("id")Long id, HttpSession session, @ModelAttribute("newArtifact")Artifact artifact, Model model) {

@@ -3,6 +3,8 @@ package com.katjarboe.archaeolog.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,4 +41,11 @@ public class ArtifactService {
 	public void deleteArtifact(Long id) {
 		artifactRepo.deleteById(id);
 	}
+	
+	//delete artifacts by dig id - used when deleting dig
+	@Transactional
+	public void deleteArtifactsByDigId(Long digId) {
+		artifactRepo.deleteByDigId(digId);
+	}
+	
 }

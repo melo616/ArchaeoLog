@@ -87,6 +87,9 @@
 	</c:forEach>
 	<p><a href="/digs/${dig.id}/allArtifacts">See more...</a></p>
 	</div>
+	<div>
+		<button onclick="deleteDigAlert(${dig.id})">Delete Dig</button>
+	</div>
 <script src="/js/script.js"></script>
 </body>
 </html>

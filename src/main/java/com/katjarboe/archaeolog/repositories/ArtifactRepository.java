@@ -10,4 +10,5 @@ import com.katjarboe.archaeolog.models.Artifact;
 @Repository
 public interface ArtifactRepository extends JpaRepository<Artifact, Long>{
 	List<Artifact> findByDigIdOrderByCreatedAtDesc(Long digId);
+	void deleteByDigId(Long digId);
 }
